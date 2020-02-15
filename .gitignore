@@ -1,0 +1,6 @@
+/web-module/target/
+/repository-module/target/
+/service-module/target/
+**/nb-configuration.xml
+**/nbactions.xml
+**/logs
