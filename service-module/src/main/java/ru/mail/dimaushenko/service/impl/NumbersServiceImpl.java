@@ -41,19 +41,12 @@ public class NumbersServiceImpl implements NumbersService {
                 case ':':
                 case '\n':
                 case '|':
-                    if (isStringNotEmpty(subString)) {
-                        if (subStrings.size() < 2) {
-                            subStrings.add(subString);
-                        } else {
-                            logger.error(STRING_HAVE_MORE_THAN_2_NUMBERS);
-                            throw new RuntimeException();
-                        }
-                        subString = "";
-                        if (string.charAt(i) != '\n') {
-                            logger.info(STRING_SEPARATED_BY + string.charAt(i));
-                        } else {
-                            logger.info(SEPARATED_BY + "\\n");
-                        }
+                    addSubString(subString, subStrings);
+                    subString = "";
+                    if (string.charAt(i) != '\n') {
+                        logger.info(STRING_SEPARATED_BY + string.charAt(i));
+                    } else {
+                        logger.info(SEPARATED_BY + "\\n");
                     }
                     break;
                 default:
@@ -66,6 +59,11 @@ public class NumbersServiceImpl implements NumbersService {
                     break;
             }
         }
+        addSubString(subString, subStrings);
+        return subStrings;
+    }
+
+    private void addSubString(String subString, List<String> subStrings) throws RuntimeException {
         if (isStringNotEmpty(subString)) {
             if (subStrings.size() < 2) {
                 subStrings.add(subString);
@@ -74,7 +72,6 @@ public class NumbersServiceImpl implements NumbersService {
                 throw new RuntimeException(STRING_HAVE_MORE_THAN_2_NUMBERS);
             }
         }
-        return subStrings;
     }
 
     private static boolean isStringNotEmpty(String subString) {
